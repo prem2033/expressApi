@@ -7,7 +7,7 @@ const app = express();
 const PORT = process.env.PORT || 3000;
 
 // Middleware
-// app.use(express.json()); // it is true for all route
+app.use(express.json()); // it is middleware to handle request
 // it will handle all request comes to /admin
 app.use('/admim', adminLogin) 
 // app.all()
