@@ -1,5 +1,4 @@
-const jwt = require('jsonwebtoken');
-
+//user login
 function userLogin(req, res, next) {
   const authHeader = req.headers['authorization'];
   const token = authHeader?.split(' ')[1] ?? 'user';
@@ -8,22 +7,16 @@ function userLogin(req, res, next) {
 
   if (token === 'user') {
     console.log('admin logging successfull');
-    next();
+    next(); // adding next sayign that go to next flow instead of returing form here
   } else {
+    // res.send() says to retun from here
     return res.status(403).json({ message: 'Token invalid' });
   }
-  // jwt.verify(token, process.env.JWT_SECRET, (err, user) => {
-  //   if (err) return res.status(403).json({ message: 'Token invalid' });
-
-  //   req.user = user;
-  //   next(); // to head to next process
-  //   // res.send("sucess") // it will return from here
-  // });
 }
 
 
 // to admin login
-export function adminLogin(req, res, next) {
+function adminLogin(req, res, next) {
   const authHeader = req.headers['authorization'];
   const token = authHeader?.split(' ')[1] ?? 'admin';
 

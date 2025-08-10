@@ -1,22 +1,26 @@
 const express = require('express');
-const dotenv = require('dotenv');
-const userRoutes = require('./routes/users');
+const userRouter = require('./routes/users');
+const adminRouter = require('./routes/admin');
+const {adminLogin, userLogin} = require('./middleware/auth')
 
-dotenv.config();
 const app = express();
 const PORT = process.env.PORT || 3000;
 
 // Middleware
 app.use(express.json()); // it is middleware to handle request
 // it will handle all request comes to /admin
-app.use('/admim', adminLogin) 
+app.use('/admin', adminLogin) 
 // app.all()
 
 // to aunthicate request from /api/user
 app.use('/api/users', userLogin);
 
-//Routes
-app.use('/api/users', userRoutes);
+//Routes to user
+app.use('/api/users', userRouter);
+
+//Routes to admin
+app.use('/admin', adminRouter);
+
 
 // Dummy login route for JWT
 app.post('/api/auth/login', (req, res) => {

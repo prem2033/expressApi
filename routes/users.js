@@ -1,5 +1,5 @@
 const express = require('express');
-const router = express.Router();
+const userRouter = express.Router();
 const auth = require('../middleware/auth');
 
 // Dummy users data
@@ -9,12 +9,17 @@ let users = [
 ];
 
 // GET all users GET:api/users
-router.get('/', auth, (req, res) => {
+userRouter.get('/', (req, res) => {
   res.json(users);
 });
 
+//Another way to add aunthication is a below
+// router.get('/', userLogin, (req, res) => {
+//   res.json(users);
+// });
+
 // CREATE user  POST:api/user
-router.post('/', auth, (req, res) => {
+userRouter.post('/', (req, res) => {
   const newUser = {
     id: users.length + 1,
     name: req.body.name,
@@ -24,7 +29,7 @@ router.post('/', auth, (req, res) => {
 });
 
 // UPDATE user   PUT:api/user/{id}
-router.put('/:id', auth, (req, res) => {
+userRouter.put('/:id', (req, res) => {
   const user = users.find(u => u.id == req.params.id);
   if (!user) return res.status(404).json({ message: 'User not found' });
 
@@ -33,9 +38,10 @@ router.put('/:id', auth, (req, res) => {
 });
 
 // DELETE user  DELETE: api/user/{id}
-router.delete('/:id', auth, (req, res) => {
+userRouter.delete('/:id', (req, res) => {
   users = users.filter(u => u.id != req.params.id);
   res.json({ message: 'User deleted' });
 });
 
-module.exports = router;
+
+module.exports = userRouter;
