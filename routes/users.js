@@ -8,12 +8,12 @@ let users = [
   { id: 2, name: 'Bob' },
 ];
 
-// GET all users
+// GET all users GET:api/users
 router.get('/', auth, (req, res) => {
   res.json(users);
 });
 
-// CREATE user
+// CREATE user  POST:api/user
 router.post('/', auth, (req, res) => {
   const newUser = {
     id: users.length + 1,
@@ -23,7 +23,7 @@ router.post('/', auth, (req, res) => {
   res.status(201).json(newUser);
 });
 
-// UPDATE user
+// UPDATE user   PUT:api/user/{id}
 router.put('/:id', auth, (req, res) => {
   const user = users.find(u => u.id == req.params.id);
   if (!user) return res.status(404).json({ message: 'User not found' });
@@ -32,7 +32,7 @@ router.put('/:id', auth, (req, res) => {
   res.json(user);
 });
 
-// DELETE user
+// DELETE user  DELETE: api/user/{id}
 router.delete('/:id', auth, (req, res) => {
   users = users.filter(u => u.id != req.params.id);
   res.json({ message: 'User deleted' });
