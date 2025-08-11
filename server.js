@@ -6,13 +6,6 @@ const {adminLogin, userLogin} = require('./middleware/auth')
 const app = express();
 const PORT = process.env.PORT || 3000;
 
-// Catch-all 404 handler
-app.use(userLogin, (req, res, next) => {
-  res.status(404).json({
-    success: false,
-    message: 'Endpoint not found',
-  });
-});
 
 // Middleware
 app.use(express.json()); // it is middleware to handle request
