@@ -4,7 +4,8 @@ import 'dotenv/config';
 import express from 'express';
 import authRoutes from './routes/auth.js';
 import usersRoutes from './routes/users.js';
-import {cookieParser} from 'cookie-parser';
+import cookieParser from 'cookie-parser';
+import { authenticateToken } from './middleware/auth.js'; // JWT authentication middleware
 
 const app = express();
 
