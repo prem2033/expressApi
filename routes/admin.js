@@ -8,7 +8,8 @@ let adminUser = [
 
 // GET all users GET:api/users
 adminRouter.get('/', (req, res) => {
-  res.json(users);
+  console.log('Admin Get Request');
+  res.json(adminUser);
 });
 
 

@@ -1,11 +1,10 @@
 //user login
 function userLogin(req, res, next) {
   const authHeader = req.headers['authorization'];
-  const token = authHeader?.split(' ')[1] ?? 'user';
 
-  if (!token) return res.status(401).json({ message: 'Token missing' });
+  if (!authHeader) return res.status(401).json({ message: 'Token missing' });
 
-  if (token === 'user') {
+  if (authHeader === 'user') {
     console.log('admin logging successfull');
     next(); // adding next sayign that go to next flow instead of returing form here
   } else {
@@ -18,11 +17,10 @@ function userLogin(req, res, next) {
 // to admin login
 function adminLogin(req, res, next) {
   const authHeader = req.headers['authorization'];
-  const token = authHeader?.split(' ')[1] ?? 'admin';
 
-  if (!token) return res.status(401).json({ message: 'Token missing' });
+  if (!authHeader) return res.status(401).json({ message: 'Token missing' });
 
-  if (token === 'admin') {
+  if (authHeader === 'admin') {
     console.log('admin logging successfull');
     next();
   } else {
