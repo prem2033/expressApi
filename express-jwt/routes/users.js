@@ -1,5 +1,5 @@
 import express from 'express';
-import authenticateToken from '../middleware/auth.js';
+import { authenticateToken, validateToken } from '../middleware/auth.js';
 
 
 const router = express.Router();
@@ -19,9 +19,14 @@ router.post('/login', (req, res) => {
     if (!user) {
         return res.status(401).json({ message: 'Invalid credentials' });
     }
-    // Do not return password in response
+    // generate jwt token and send in cookies
     const { password: pw, ...safeUser } = user;
-    res.json({ message: 'Login successful', user: safeUser });
+    // 1st arguments could be json as well
+    const accessToken = jwt.sign({ username }, process.env.JWT_SECRET, { expiresIn: '1h' });
+    //seeting cookies on token
+    //You can set multiple cookies in a single response by calling res.cookie
+    res.cookie('token', accessToken, { expires: new Date(Date.now() + 900000), httpOnly: true });
+    res.status(200).send(true);
 });
 
 
@@ -41,18 +46,23 @@ router.post('/register', (req, res) => {
     users.push(newUser);
     // Do not return password in response
     const { password: pw, ...safeUser } = newUser;
-    res.status(201).json(safeUser);
+    // generate jwt token and send in cookies
+    const accessToken = jwt.sign({ username }, process.env.JWT_SECRET, { expiresIn: '1h' });
+    //seeting cookies on token
+    //You can set multiple cookies in a single response by calling res.cookie
+    res.cookie('token', accessToken, { expires: new Date(Date.now() + 900000), httpOnly: true });
+    res.status(201).send(true);
 });
 
 
 // GET all users
-router.get('/', authenticateToken, (req, res) => {
+router.get('/', validateToken, (req, res) => {
     res.json(users);
 });
 
 
 // POST create new user
-router.post('/', authenticateToken, (req, res) => {
+router.post('/', validateToken, (req, res) => {
     const { username, email } = req.body;
     if (!username || !email) {
         return res.status(400).json({ message: 'Username and email are required' });
@@ -64,7 +74,7 @@ router.post('/', authenticateToken, (req, res) => {
 
 
 // PUT update user by id
-router.put('/:id', authenticateToken, (req, res) => {
+router.put('/:id', validateToken, (req, res) => {
     const { id } = req.params;
     const { username, email } = req.body;
     const user = users.find(u => u.id === parseInt(id));
@@ -76,7 +86,7 @@ router.put('/:id', authenticateToken, (req, res) => {
 
 
 // DELETE user by id
-router.delete('/:id', authenticateToken, (req, res) => {
+router.delete('/:id', validateToken, (req, res) => {
     const { id } = req.params;
     const index = users.findIndex(u => u.id === parseInt(id));
     if (index === -1) return res.status(404).json({ message: 'User not found' });
