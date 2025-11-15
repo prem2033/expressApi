@@ -5,6 +5,7 @@ import express from 'express';
 import authRoutes from './routes/auth.js';
 import usersRoutes from './routes/users.js';
 import cookieParser from 'cookie-parser';
+import decryptRoutes from './routes/decrypt.js'
 import { authenticateToken } from './middleware/auth.js'; // JWT authentication middleware
 
 const app = express();
@@ -14,9 +15,11 @@ app.use(express.json()); // parse body json
 
 app.use(cookieParser()); //parse cookies in middleware 
 
-app.use('/auth', authRoutes); // to get Token
+// app.use('/auth', authRoutes); // to get Token
 
 app.use('/users', usersRoutes);
+
+app.use('/decrypt', decryptRoutes);
 
 // 404 with JWT protection
 app.use(authenticateToken, (req, res) => {
