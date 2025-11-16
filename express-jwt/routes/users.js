@@ -11,6 +11,7 @@ let users = [
 
 // Public login route set cookies
 router.post('/login', (req, res) => {
+    console.log('users/login called');
     const { username, password } = req.body;
     if (!username || !password) {
         return res.status(400).json({ message: 'Username and password are required' });
@@ -34,6 +35,7 @@ router.post('/login', (req, res) => {
 
 // Public registration route
 router.post('/register', (req, res) => {
+    console.log('users/register called');
     const { username, email, password } = req.body;
     if (!username || !email || !password) {
         return res.status(400).json({ message: 'Username, email, and password are required' });
@@ -57,12 +59,14 @@ router.post('/register', (req, res) => {
 
 // GET all users
 router.get('/', validateToken, (req, res) => {
+    console.log('GET:users called');
     res.json(users);
 });
 
 
 // POST create new user
 router.post('/', validateToken, (req, res) => {
+    console.log('POST:users called');
     const { username, email } = req.body;
     if (!username || !email) {
         return res.status(400).json({ message: 'Username and email are required' });
@@ -75,6 +79,7 @@ router.post('/', validateToken, (req, res) => {
 
 // PUT update user by id
 router.put('/:id', validateToken, (req, res) => {
+    console.log('PUT:users/:id called');
     const { id } = req.params;
     const { username, email } = req.body;
     const user = users.find(u => u.id === parseInt(id));
@@ -87,6 +92,7 @@ router.put('/:id', validateToken, (req, res) => {
 
 // DELETE user by id
 router.delete('/:id', validateToken, (req, res) => {
+     console.log('DELETE:users/:id called');
     const { id } = req.params;
     const index = users.findIndex(u => u.id === parseInt(id));
     if (index === -1) return res.status(404).json({ message: 'User not found' });

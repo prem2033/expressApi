@@ -7,6 +7,7 @@ const router = express.Router();
 router.post('/token', (req, res) => {
     // In a real app, validate user credentials from DB
     const { username, password } = req.body;
+     console.log('auth/token called', username, password);
     if (username !== 'admin' || password !== 'password') {
         return res.status(401).json({ message: 'Invalid credentials' });
     }

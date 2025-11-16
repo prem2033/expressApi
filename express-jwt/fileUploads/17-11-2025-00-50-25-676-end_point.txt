@@ -1,0 +1,36 @@
+POST : http://localhost:3000/users/login
+I/P :{
+    "username": "admin",
+    "password": "password"
+}
+
+GET : http://localhost:3000/users
+O/P
+[
+    {
+        "id": 1,
+        "username": "admin",
+        "email": "admin@example.com",
+        "password": "password"
+    }
+]
+
+GET : http://localhost:3000/encrypt?user=prem&password=Prem@2033
+O/P
+{
+    "status": 200,
+    "data": {
+        "user": "prem",
+        "status": "success"
+    }
+}
+
+GET : http://localhost:3000/decrypt?user=prem
+O/P
+{
+    "status": "Valid user",
+    "user": "prem"
+}
+
+POST : http://localhost:3000/file/upload
+form-data : file : fie_name.txt

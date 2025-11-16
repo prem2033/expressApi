@@ -20,9 +20,9 @@ app.use('/auth', authRoutes); // to get Token
 
 app.use('/users', usersRoutes); // user routes
 
-app.use('/decrypt', decryptRoutes); // decryption encryption
+app.use('/', decryptRoutes); // decryption encryption
 
-app.use('/file-upload', fileUploadRoutes); // decryption encryption
+app.use('/file', fileUploadRoutes); // decryption encryption
 
 // 404 with JWT protection
 app.use(authenticateToken, (req, res) => {
