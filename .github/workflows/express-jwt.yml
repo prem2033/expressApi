@@ -1,0 +1,44 @@
+name: CI Pipeline
+
+on:
+  pull_request: # when Pr is created or updated
+    branches:
+      - main
+    types: [opened, synchronize, reopened]
+  push: # when code is pushed to main branch
+    branches:
+      - main
+
+jobs:
+  build-and-test:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v4
+
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20.x
+
+      - name: Install Dependencies
+        run: npm run prep
+
+      - name: Run Tests (if exist)
+        run: |
+          if npm run | grep -q "test"; then
+            echo "Test script found. Running tests..."
+            npm test
+          else
+            echo "No test script found. Skipping tests."
+          fi
+
+      - name: Build Project
+        run: |
+          if npm run | grep -q "build"; then
+            echo "Build script found. Running build..."
+            npm run build
+          else
+            echo "No build script found. Skipping build."
+          fi
