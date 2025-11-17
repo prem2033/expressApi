@@ -26,12 +26,14 @@ app.use('/file', fileUploadRoutes); // decryption encryption
 
 // 404 with JWT protection
 app.use(authenticateToken, (req, res) => {
+  console.log('404 handler called');
   res.status(404).json({ message: 'Not Found (auth required)' });
 });
 
 // Error handler
 app.use((err, req, res, next) => {
   console.error(err.stack);
+  console.log('Error handler called');
   res.status(500).json({ message: 'Internal Server Error' });
 });
 
