@@ -1,0 +1,17 @@
+doctype html
+html
+  head
+    meta(charset="utf-8")
+    meta(name="viewport" content="width=device-width, initial-scale=1")
+    link(rel="stylesheet", href="https://cdn.jsdelivr.net/npm/bulma@0.9.4/css/bulma.min.css")
+  body
+    .section
+      .container
+        h1.title User Management (Pug + Express + TS)
+        nav.mb-4
+          a.button.is-link(href="/", style="display:inline-block; margin-left: 10px;") Home
+          a.button.is-user(href="/user/users", style="display:inline-block; margin-left: 10px;") View Users
+          a.button.is-user-new(href="/user/newuser", style="display:inline-block; margin-left: 10px;") Add User
+        
+        // ⬇️ block content should be here, not inside nav
+        block content
