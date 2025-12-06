@@ -1,0 +1,13 @@
+extends layout
+
+block content
+  // Modal always visible when page loads
+  .modal.is-active
+    .modal-background
+    .modal-card
+      header.modal-card-head
+        p.modal-card-title Success
+      section.modal-card-body
+        p User has been successfully deleted.
+      footer.modal-card-foot
+        a.button.is-primary(href="/") OK

@@ -1,0 +1,28 @@
+{
+  "name": "express-basic-setup",
+  "version": "1.0.0",
+  "main": "server.js",
+  "scripts": {
+    "build": "tsc",
+    "dev": "nodemon --watch src --exec ts-node server.ts",
+    "start": "node build/src/server.js"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "description": "",
+  "devDependencies": {
+    "@types/express": "^5.0.6",
+    "@types/method-override": "^3.0.0",
+    "@types/node": "^24.10.1",
+    "nodemon": "^3.1.11",
+    "ts-node": "^10.9.2",
+    "typescript": "^5.9.3"
+  },
+  "dependencies": {
+    "@types/pug": "^2.0.10",
+    "express": "^5.2.1",
+    "method-override": "^3.0.0",
+    "pug": "^3.0.3"
+  }
+}

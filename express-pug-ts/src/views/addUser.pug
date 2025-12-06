@@ -1,0 +1,22 @@
+extends layout
+
+block content
+  h3.title.is-4 Add New User
+
+  form(method="POST", action="/user")
+    .field
+      label.label User ID
+      .control
+        input.input(type="text", name="userId", required)
+
+    .field
+      label.label Name
+      .control
+        input.input(type="text", name="name", required)
+
+    .field
+      label.label Email
+      .control
+        input.input(type="email", name="email", required)
+
+    button.button.is-primary(type="submit") Add User

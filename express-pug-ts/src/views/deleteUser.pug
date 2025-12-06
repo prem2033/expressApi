@@ -1,0 +1,12 @@
+extends layout
+
+block content
+  h3.title.is-4 Delete User
+
+  form(method="POST", action="/user?_method=DELETE")
+    .field
+      label.label User ID
+      .control
+        input.input(type="text", name="userId", placeholder="Enter user ID", required)
+
+    button.button.is-danger(type="submit") Delete User
