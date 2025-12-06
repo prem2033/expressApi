@@ -8,12 +8,6 @@ import { User } from "../types/user";
 
 export const userRoute = Router();
 
-// const app = express();
-
-// View engine setup
-// app.set("view engine", "pug");
-// app.set("views", "./src/views");
-
 let users: User[] = [
   { userId: "prem3p", name: "Prem", email: "prem@example.com" },
   { userId: "prem4p", name: "John Doe", email: "john@example.com" },
@@ -22,19 +16,12 @@ let users: User[] = [
 userRoute.get("/users", (req: Request, res: Response, next: NextFunction) => {
   console.log("Get all users GET:/user/users");
   // res.status(200).json({data : users})
-  res.render("userList", { users });
+  return res.render("userList", { users });
 });
 
-// userRoute.get("/:id", (req: Request, res: Response, next: NextFunction) => {
-//   console.log("Get /user:id");
-//   console.log(JSON.stringify(req));
-//   res.send("Get call");
-// });
-
-
 userRoute.get("/newuser", (req: Request, res: Response, next: NextFunction) => {
-  console.log("redirctimg to post call from /new => POST:/user")
-  res.render("addUser");
+  console.log("redirctimg to post call from /new => POST:/user");
+  return res.render("addUser");
 });
 
 userRoute.post("/", (req: Request, res: Response, next: NextFunction) => {
@@ -45,17 +32,32 @@ userRoute.post("/", (req: Request, res: Response, next: NextFunction) => {
     return res.status(400).send("Name and email are required");
   }
   users.push({ userId, name, email });
-  res.render("userList", { users });
+  return res.render("userList", { users });
 });
 
 userRoute.put("/:id", (req: Request, res: Response, next: NextFunction) => {
   console.log("put /user:id");
   console.log(JSON.stringify(req));
-  res.send("Post call");
+  return res.send("Post call");
 });
 
-userRoute.delete("/:id", (req: Request, res: Response, next: NextFunction) => {
-  console.log("Delete /user:id");
-  console.log(JSON.stringify(req));
-  res.send("Post call");
+userRoute.get(
+  "/deleteUser",
+  (req: Request, res: Response, next: NextFunction) => {
+    console.log(
+      "redirctimg to delete call from GET/deleteUser => DELETE:/user"
+    );
+    return res.render("deleteUser");
+  }
+);
+
+userRoute.delete("/", (req: Request, res: Response, next: NextFunction) => {
+  const { userId } = req.body;
+  console.log(`DELETE :/user ${userId}`);
+  const index = users.findIndex((user) => user.userId === userId);
+  if (index === -1) {
+    return res.render("deleteEmpty");
+  }
+  users = users.filter((user) => user.userId !== userId);
+  return res.render("deleteSuccess");
 });
