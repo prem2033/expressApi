@@ -1,16 +1,27 @@
-import express, { Router, Request, Response, NextFunction } from "express";
-import { User } from "../modals/users/create";
+import { Router, Request, Response, NextFunction } from "express";
+import { UserSchema } from "../validator/user";
+import { User } from "../modals/user";
 
-const router = express.Router();
+export const userRouter = Router();
 
 //post record
-router.post("/", async (req: Request, res: Response) => {
+userRouter.post("/", async (req: Request, res: Response) => {
   try {
-    const { name, email, phone, address } = req.body;
+    const result = UserSchema.safeParse(req.body);
 
-    if (!name || !email || !phone || !address) {
-      return res.status(400).json({ error: "All fields are required." });
+    console.log(JSON.stringify(result));
+    if (!result.success) {
+      const messgae = JSON.parse(result.error?.message);
+      return res.status(400).json({
+        
+        errors: messgae.map((err: { path: any[]; message: any; }) => ({
+          field: err.path.join("."),
+          message: err.message,
+        })),
+      });
     }
+
+    const { name, email, phone, address } = req.body;
 
     const user = await User.create({ name, email, phone, address });
 
@@ -20,17 +31,33 @@ router.post("/", async (req: Request, res: Response) => {
   }
 });
 
+userRouter.get("/", async (req: Request, res: Response, next: NextFunction) => {
+  try {
+    const users = await User.find();
+    res.status(200).json({
+      message: "Users retrieved successfully",
+      count: users.length,
+      users,
+    });
+  } catch (error: unknown) {
+    res.status(500).json({ error: (error as Error).message });
+  }
+});
+
 // get one record
-router.get(
+userRouter.get(
   "/getone:userId",
   (req: Request, res: Response, next: NextFunction) => {}
 );
 
 // delete user
-router.delete(
+userRouter.delete(
   "/:userId",
   (req: Request, res: Response, next: NextFunction) => {}
 );
 
 // get all users
-router.get("/get_all", (req: Request, res: Response, next: NextFunction) => {});
+userRouter.get(
+  "/get_all",
+  (req: Request, res: Response, next: NextFunction) => {}
+);
