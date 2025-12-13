@@ -5,11 +5,19 @@ import { authenticateToken } from "./middleware/auth";
 import { errorHandler, notFound } from "./middleware/errorHandler";
 import { connectDB } from "./mongo";
 import { userRouter } from "./routes/user";
+import helmet from "helmet";
+import cors from "cors";
+import { corsOptions } from "./middleware/cors";
 // import { apiRateLimit } from "./middleware/rateLimiter";
 // import { errorHandler, notFound } from "./middleware/errorHandler";
 // import { authenticateToken } from "./middleware/auth";
 
 const app = express(); // create exprss server
+
+// Add Helmet middleware
+app.use(helmet());
+// cors
+app.use(cors(corsOptions));
 
 dotenv.config(); // Load env variables
 app.use(express.json());
