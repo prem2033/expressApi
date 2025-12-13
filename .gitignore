@@ -140,3 +140,6 @@ vite.config.ts.timestamp-*
 
 build
 .build
+
+express-pug-ts/playwright-report
+express-pug-ts/test-results

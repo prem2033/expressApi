@@ -16,7 +16,7 @@
     // "target": "esnext",
     // "types": [],
     // For nodejs:
-    "lib": ["esnext", "DOM"],
+    "lib": ["esnext"],
     "types": ["node"],
     // and npm install -D @types/node
 
@@ -28,7 +28,7 @@
     // Stricter Typechecking Options
     "noUncheckedIndexedAccess": true,
     "exactOptionalPropertyTypes": true,
-
+    "skipLibCheck": true, 
     // Style Options
     // "noImplicitReturns": true,
     // "noImplicitOverride": true,

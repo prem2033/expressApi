@@ -32,7 +32,7 @@ userRoute.post("/", (req: Request, res: Response, next: NextFunction) => {
     return res.status(400).send("Name and email are required");
   }
   users.push({ userId, name, email });
-  return res.render("userList", { users });
+  return res.status(201).render("userList", { users });
 });
 
 userRoute.put("/:id", (req: Request, res: Response, next: NextFunction) => {
