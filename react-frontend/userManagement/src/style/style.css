@@ -1,57 +1,37 @@
-/* ========================
-   Base Reset & Variables
-======================== */
-:root {
-  --bg-page: #f7f9fc;
-  --bg-card: #ffffff;
-  --text-primary: #1f2937;
-  --text-secondary: #6b7280;
-  --border-light: #e5e7eb;
-  --primary: #2563eb;
-  --danger: #dc2626;
-}
-
-* {
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
-}
-
-body {
-  font-family: "Inter", system-ui, -apple-system, BlinkMacSystemFont, sans-serif;
-  background-color: var(--bg-page);
-  color: var(--text-primary);
-}
-
-/* ========================
-   Page Layout
-======================== */
+/* Page */
 .page {
   min-height: 100vh;
   width: 100%;
+  background: #f7f9fc;
+}
+
+/* ========================
+   User List Section
+======================== */
+.content {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding-top: 24px;
+
+  /* Divider line above UserList */
+  border-top: 1px solid #e5e7eb;
 }
 
 /* Header */
 .header {
-  max-width: 1200px;
-  margin: 0 auto;
-  padding: 24px;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
+  padding: 16px 24px 12px;
 }
 
 .header h2 {
-  font-size: 22px;
+  font-size: 20px;
   font-weight: 600;
+  color: #1f2937;
 }
 
 /* ========================
-   Grid Container
+   Cards Grid
 ======================== */
 .container {
-  max-width: 1200px;
-  margin: 0 auto;
   padding: 0 24px 32px;
 
   display: grid;
@@ -63,61 +43,16 @@ body {
    Card
 ======================== */
 .card {
-  background: var(--bg-card);
-  border: 1px solid var(--border-light);
+  background: #ffffff;
+  border: 1px solid #e5e7eb;
   border-radius: 10px;
-  padding: 18px;
+  padding: 16px;
   transition: box-shadow 0.2s ease, transform 0.2s ease;
 }
 
 .card:hover {
   box-shadow: 0 8px 20px rgba(0, 0, 0, 0.06);
   transform: translateY(-2px);
-}
-
-.card h3 {
-  font-size: 16px;
-  font-weight: 600;
-  margin-bottom: 10px;
-}
-
-.card p {
-  font-size: 14px;
-  color: var(--text-secondary);
-  margin-bottom: 6px;
-}
-
-/* ========================
-   Buttons
-======================== */
-.add-btn {
-  padding: 8px 16px;
-  background: var(--primary);
-  color: #ffffff;
-  border: none;
-  border-radius: 6px;
-  font-size: 14px;
-  cursor: pointer;
-}
-
-.add-btn:hover {
-  opacity: 0.9;
-}
-
-.delete-btn {
-  margin-top: 14px;
-  padding: 6px 12px;
-  background: transparent;
-  color: var(--danger);
-  border: 1px solid var(--danger);
-  border-radius: 6px;
-  font-size: 13px;
-  cursor: pointer;
-}
-
-.delete-btn:hover {
-  background: var(--danger);
-  color: #ffffff;
 }
 
 /* ========================
@@ -135,8 +70,125 @@ body {
   }
 
   .header {
-    flex-direction: column;
-    align-items: flex-start;
-    gap: 12px;
+    padding: 12px 16px;
   }
+
+  .container {
+    padding: 0 16px 24px;
+  }
+}
+
+/* Delete button */
+.delete-btn {
+  margin-top: 14px;
+  padding: 8px 12px;
+
+  background: #dc2626;      /* red */
+  color: #ffffff;
+
+  border: none;
+  border-radius: 6px;
+
+  font-size: 13px;
+  font-weight: 500;
+
+  cursor: pointer;
+  transition: background 0.2s ease;
+}
+
+.delete-btn:hover {
+  background: #b91c1c;      /* darker red */
+}
+
+
+/* Add User Panel (Centered & Compact) */
+.side-panel {
+  max-width: 760px;           /* smaller width */
+  margin: 32px auto;          /* center horizontally */
+  padding: 20px 24px;
+
+  background: #ffffff;
+  border: 1px solid #e5e7eb;
+  border-radius: 10px;
+}
+
+/* Title */
+.side-panel h3 {
+  margin-bottom: 14px;
+  font-size: 17px;
+  font-weight: 600;
+  text-align: center;
+}
+
+/* Two-column form */
+.form-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 20px;
+}
+
+/* Column */
+.form-col {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+/* Inputs */
+.form-col input {
+  padding: 8px 10px;
+  border-radius: 6px;
+  border: 1px solid #d1d5db;
+  font-size: 14px;
+}
+
+.form-col input:focus {
+  outline: none;
+  border-color: #2563eb;
+}
+
+/* Button */
+.add-btn {
+  margin-top: auto;
+  padding: 9px;
+  font-size: 14px;
+  border-radius: 6px;
+  background: #2563eb;
+  color: #ffffff;
+  border: none;
+  cursor: pointer;
+}
+
+.add-btn:disabled {
+  opacity: 0.7;
+  cursor: not-allowed;
+}
+
+/* Error message */
+.error-text {
+  margin-top: 10px;
+  text-align: center;
+  font-size: 13px;
+  color: #dc2626;
+}
+
+/* Mobile */
+@media (max-width: 768px) {
+  .side-panel {
+    max-width: 92%;
+  }
+
+  .form-grid {
+    grid-template-columns: 1fr;
+  }
+}
+.error-text {
+  min-height: 18px;
+  margin-top: 10px;
+  opacity: 0;
+  transition: opacity 0.2s ease;
+}
+
+.error-text:not(:empty) {
+  opacity: 1;
 }

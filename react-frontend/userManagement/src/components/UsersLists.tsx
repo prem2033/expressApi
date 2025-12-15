@@ -4,6 +4,7 @@ import type { User } from "../types/user";
 import { UserCard } from "./UserCard";
 import { api } from "../services";
 import "../style/style.css";
+import { AddUserPanel } from "./AddUserPanel";
 
 export const UserList = () => {
   const [users, setUsers] = useState<User[]>([]);
@@ -34,39 +35,20 @@ export const UserList = () => {
 
   return (
     <div className="page">
-      {/* Header */}
-      <div className="header">
-        <h2>UserList</h2>
-        <button
-          className="add-btn"
-          onClick={() =>
-            onAdd({
-              name: "prem prakash",
-              email: "prem5@gmail.com",
-              userName: "prem50",
-              phone: "+9973950290",
-              address: "Bangalore",
-            })
-          }
-        >
-          Add User
-        </button>
-      </div>
+      {/* Add User Panel */}
+      <AddUserPanel />
 
-      {loading ? (
-        <p>Loading users...</p>
-      ) : (
-        //     <div className="grid">
-        //       {users.map((user) => (
-        //         <UserCard key={user.id} user={user} onDelete={handleDelete} />
-        //       ))}
-        //     </div>
+      {/* User List */}
+      <div className="content">
+        <div className="header">
+          <h2>UserList</h2>
+        </div>
         <div className="container">
           {users.map((user) => (
             <UserCard key={user._id} user={user} onDelete={handleDelete} />
           ))}
         </div>
-      )}
+      </div>
     </div>
   );
 };
